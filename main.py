@@ -15,34 +15,53 @@ Puis on lance une boucle pour voir ou se trouve la transition du positif au nég
 """
 import numpy
 
+
 def f(x) : 
     return x**2 - 8 * numpy.log(x) #affiche une liste 
 
 def solve_equation (f, left, right, precision = 10**(-3)) : 
 
-    
-    while right - left >= precision : 
+    while right - left >= precision : #tant qu'on atteint pas notre seuil de précision 
         middle = (right + left) / 2 #on prend la distance de notre courbe et on la sépare en deux parties 
         
         if f(middle) == 0 : 
             print(middle)
             break 
         
-        elif f(left) * f(middle) < 0 :  #on vérifie que si la  
+        elif f(left) * f(middle) < 0 :
             right = middle 
             
         elif f(right) * f(middle) < 0 : 
             left = middle
     
-    return middle  
-        
+    return middle 
 
-  
-if __name__ == "__main__" :
+    
+import matplotlib.pyplot as plt 
+from config_file import *  #récuperation des données présents dans ma feuille config_file
+
+def plot_function (f, start, end, step=0.01) : #fonction pour créer un graphique avec une courbe 
+    x = numpy.arange(start, end, step)
+    y = f(x)
+    
+    plt.figure(figsize=(length, hight))#definit la taille du graph en utilisant les variables présent dans ma feuille config_file
+    plt.plot(x, y, ":", color = "green") #definit les valeurs en abscisses et en ordinnées, les : permettent d'afficher la courbe sous forme de pointillés
+    plt.show()
+    
+
+
+
+if __name__ == "__main__" : 
+    
+    plot_function(f, start=0.01, end=5, step = 0.01)
+    
+    """
     x = numpy.array([1, 2, 3])
     y = f(x)
     middle = solve_equation(f, left=1, right=2)
     #y = [f(1), f(2), f(3)] voila ce qui se passe en backend 
     print (middle) #valeur à laquelle h -> 0.
     print(f(middle))
+    """
+    
 
